@@ -22,7 +22,7 @@ char checkEmptyString(const char* numbers) {
 }
 
 int checkNegativeNumber(int value) {
-  if(value<0)(
+  if(value<0){
     Printf("negatives not allowed");
     return 0;
   }
