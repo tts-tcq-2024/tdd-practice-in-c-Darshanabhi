@@ -15,7 +15,7 @@ int additionOfInputs(int value){
   return total;
 }
 
-void checkEmptyString(char *numbers) {
+char checkEmptyString(char *numbers) {
   if (numbers == NULL || strlen(numbers) == 0) {
         return 0;
   }
