@@ -8,18 +8,22 @@ int convertStringToInteger(char *token) {
   return value;
 }
 
+int additionOfInputs(int value){
+  if (value <= 1000)      }
+  total += value;
+  return total;
+}
+
 int add(const char* numbers) {
   if (numbers == NULL || strlen(numbers) == 0) {
         return 0;
-    }
+  }
   int total = 0;
-  char *num_copy;
-  strcpy(num_copy,numbers);
-  char *token = strtok(num_copy, ",\n");
-  int value = convertStringToInteger(token);
-  if (value > 1000) {
-           value = 0;  // Ignore numbers greater than 1000
-     }
-  total += value;
+  char *token = strtok(numbers, ",\n");
+  while (token != NULL) {  
+    int value = convertStringToInteger(token);
+    total = additionOfInputs(value);
+    token = strtok(NULL, ",\n");
+  }
   return total;
 }
