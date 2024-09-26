@@ -9,6 +9,7 @@ int convertStringToInteger(char *token) {
 }
 
 int additionOfInputs(int value){
+  int total;
   if (value <= 1000)      
   total += value;
   return total;
@@ -19,7 +20,8 @@ int add(const char* numbers) {
         return 0;
   }
   int total = 0;
-  const char *token = strtok(numbers, ",\n");
+  char *num_copy = strdup(numbers);
+  char *token = strtok(num_copy, ",\n");
   while (token != NULL) {  
     int value = convertStringToInteger(token);
     total = additionOfInputs(value);
