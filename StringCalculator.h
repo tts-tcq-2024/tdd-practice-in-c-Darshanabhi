@@ -15,10 +15,13 @@ int additionOfInputs(int value){
   return total;
 }
 
-int add(const char* numbers) {
+void checkEmptyString(char *numbers) {
   if (numbers == NULL || strlen(numbers) == 0) {
         return 0;
   }
+}
+int add(const char* numbers) {
+  checkEmptyString(numbers);
   int total = 0;
   char *num_copy = strdup(numbers);
   char *token = strtok(num_copy, ",\n");
