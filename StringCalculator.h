@@ -3,6 +3,11 @@
 #include <string.h>
 #include <ctype.h>
 
+int convertStringToInteger(char *token) {
+  int value = atoi(token);
+  return value;
+}
+
 int add(const char* numbers) {
   if (numbers == NULL || strlen(numbers) == 0) {
         return 0;
@@ -11,7 +16,7 @@ int add(const char* numbers) {
   char *num_copy;
   strcpy(num_copy,numbers);
   char *token = strtok(num_copy, ",\n");
-  int value = atoi(token);
+  int value = convertStringToInteger(token);
   if (value > 1000) {
            value = 0;  // Ignore numbers greater than 1000
      }
