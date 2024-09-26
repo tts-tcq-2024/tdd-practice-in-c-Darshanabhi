@@ -20,7 +20,8 @@ char checkEmptyString(char numbers) {
         return 0;
   }
 }
-int add(const char* numbers) {
+
+int add(char* numbers) {
   checkEmptyString(numbers);
   int total = 0;
   char *num_copy = strdup(numbers);
