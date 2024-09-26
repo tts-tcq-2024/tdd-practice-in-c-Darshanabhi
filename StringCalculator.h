@@ -10,7 +10,7 @@ int convertStringToInteger(char* token) {
 
 int additionOfInputs(int value){
   int total;
-  if (value <= 1000)      
+  if (value < 1000)      
   total += value;
   return total;
 }
