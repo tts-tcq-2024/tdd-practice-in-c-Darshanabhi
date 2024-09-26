@@ -8,13 +8,13 @@ int add(const char* numbers) {
         return 0;
     }
   int total = 0;
-  char num_copy;
+  char *num_copy;
   strcpy(num_copy,numbers);
-  char token = strtok(num_copy, ",\n");
+  char *token = strtok(num_copy, ",\n");
   int value = atoi(token);
   if (value > 1000) {
            value = 0;  // Ignore numbers greater than 1000
      }
-  total = total+ value;
+  total += value;
   return total;
 }
