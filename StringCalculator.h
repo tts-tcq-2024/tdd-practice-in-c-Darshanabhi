@@ -9,7 +9,7 @@ int convertStringToInteger(char *token) {
 }
 
 int additionOfInputs(int value){
-  if (value <= 1000)      }
+  if (value <= 1000)      
   total += value;
   return total;
 }
@@ -19,7 +19,7 @@ int add(const char* numbers) {
         return 0;
   }
   int total = 0;
-  char *token = strtok(numbers, ",\n");
+  const char *token = strtok(numbers, ",\n");
   while (token != NULL) {  
     int value = convertStringToInteger(token);
     total = additionOfInputs(value);
