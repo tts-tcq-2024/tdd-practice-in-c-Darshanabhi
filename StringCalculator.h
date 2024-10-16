@@ -4,41 +4,47 @@
 #include <ctype.h>
 
 int convertStringToInteger(char* token) {
-  int value = atoi(token);
-  return value;
+    return atoi(token);
 }
 
-int additionOfInputs(int value){
-  int total=0;
-  if (value <= 1000)  {    
-  total += value;
-  }
-  return total;
+int additionOfInputs(int value, int total) {
+    if (value <= 1000) {
+        total += value;
+    }
+    return total;
 }
 
-void checkEmptyString(const char* numbers) {
-  if (numbers == NULL || strlen(numbers) == 0) {
-    exit(0);
+int checkEmptyString(const char* numbers) {
+    return numbers == NULL || strlen(numbers) == 0;
 }
 
 void checkNegativeNumber(int value) {
-  if(value<0){
-    printf("negatives not allowed");
-    exit(0);
-  }
+    if (value < 0) {
+        printf("negatives not allowed\n");
+        exit(0);
+    }
 }
 
 int add(const char* numbers) {
-  checkEmptyString(numbers);
-  int total = 0;
-  char *num_copy = strdup(numbers);
-  char *token = strtok(num_copy, ",\n");
-  while (token != NULL) {  
-    int value = convertStringToInteger(token);
-    checkNegativeNumber(value);
-    total = additionOfInputs(value);
-    token = strtok(NULL, ",\n");
-  }
-  free(num_copy);
-  return total;
+    if (checkEmptyString(numbers)) {
+        return 0; // Return 0 for empty input
+    }
+
+    int total = 0;
+    char *num_copy = strdup(numbers); // Duplicate the input string
+    if (num_copy == NULL) {
+        perror("Failed to allocate memory");
+        exit(1);
+    }
+
+    char *token = strtok(num_copy, ",\n");
+    while (token != NULL) {  
+        int value = convertStringToInteger(token);
+        checkNegativeNumber(value);
+        total = additionOfInputs(value, total);
+        token = strtok(NULL, ",\n");
+    }
+
+    free(num_copy); // Free the duplicated string
+    return total;
 }
