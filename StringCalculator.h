@@ -25,6 +25,15 @@ void checkNegativeNumber(int value) {
     }
 }
 
+int string_Calculator(char *token, int total, char *token) {
+    while (token != NULL) {  
+        int value = convertStringToInteger(token);
+        checkNegativeNumber(value);
+        total = additionOfInputs(value, total);
+        token = strtok(NULL, ",\n");
+    }
+}
+
 int add(const char* numbers) {
     if (checkEmptyString(numbers)) {
         return 0; // Return 0 for empty input
@@ -38,12 +47,7 @@ int add(const char* numbers) {
     }
 
     char *token = strtok(num_copy, ",\n");
-    while (token != NULL) {  
-        int value = convertStringToInteger(token);
-        checkNegativeNumber(value);
-        total = additionOfInputs(value, total);
-        token = strtok(NULL, ",\n");
-    }
+    total = string_Calculator(token,total,token);
 
     free(num_copy); // Free the duplicated string
     return total;
