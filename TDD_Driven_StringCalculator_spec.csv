@@ -1,0 +1,13 @@
+﻿TDD Driven String calculator,,,
+,,,
+Test case ID,input,output,test description
+Test case 01, ,0,To check if the input is empty string return 0 as output
+Test case 02,Roberto,0,To verify if the input is not a number and returning 0
+Test case 03,"1, 2",3,To check if output is addition of 2 numbers
+Test case 04,"250, 850, 25, 32",1157,To verify addition of unknown amount of numbers
+Test case 05,"1\n2,3",6,To verify addition of input numbers even if input is having new line between numbers
+Test case 06,"345\n235,682\n, 23",1294,To verify addition of input numbers even if input is having new line between numbers
+Test case 07,//;\n5;61,66,To check if input is having Delimiters at the beginning of the string with a separate line the first line can be optional and add method should be performed
+Test case 08,-63,Negatives not allowed,Add method throwns an exception negatives not allowed when input is negative
+Test case 09,"650, 1001, 230",850,Numbers bigger than 1000 should be ignored during addition calculator
+Test case 10,"2,***\n1, //{}\n56",59,To check if Delimiter having any length which are in separate line the add mehtod should returns addition ignoring delimiters
