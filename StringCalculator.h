@@ -9,17 +9,16 @@ int convertStringToInteger(char* token) {
 }
 
 int additionOfInputs(int value){
-  int total;
+  int total=0;
   if (value <= 1000)  {    
   total += value;
   }
   return total;
 }
 
-char checkEmptyString(const char* numbers) {
+void checkEmptyString(const char* numbers) {
   if (numbers == NULL || strlen(numbers) == 0) {
-        return 0;
-  }
+    exit(0);
 }
 
 void checkNegativeNumber(int value) {
@@ -40,5 +39,6 @@ int add(const char* numbers) {
     total = additionOfInputs(value);
     token = strtok(NULL, ",\n");
   }
+  free(num_copy);
   return total;
 }
