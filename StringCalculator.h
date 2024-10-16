@@ -1,10 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 #define MAX_NUMBERS 100
-#define MAX_DELIMITER_LENGTH 10
 
 void throw_negative_exception(int negatives[], int count) {
     printf("negatives not allowed: ");
@@ -18,36 +16,16 @@ void throw_negative_exception(int negatives[], int count) {
     exit(1); // Exit program due to exception
 }
 
-void replace_newlines_with_delimiter(char *numbers, const char *delimiter) {
-    for (char *p = numbers; *p; p++) {
-        if (*p == '\n') {
-            *p = delimiter[0]; // Replace with default delimiter
+char get_delimiter(char *numbers) {
+    if (numbers[0] == '/' && numbers[1] == '/') {
+        if (numbers[2] == '[') {
+            // Custom delimiter in the format //[*delim*]
+            char *end = strchr(numbers + 3, ']');
+            return (end) ? *(numbers + 3) : ',';
         }
+        return numbers[2]; // Simple single-character delimiter
     }
-}
-
-int process_numbers(char *numbers, const char *delimiter) {
-    int total = 0;
-    int negatives[MAX_NUMBERS] = {0};
-    int negative_count = 0;
-
-    // Split by delimiter
-    char *num = strtok(numbers, delimiter);
-    while (num != NULL) {
-        int value = atoi(num);
-        if (value < 0) {
-            negatives[negative_count++] = value;
-        } else if (value <= 1000) {
-            total += value;
-        }
-        num = strtok(NULL, delimiter);
-    }
-
-    if (negative_count > 0) {
-        throw_negative_exception(negatives, negative_count);
-    }
-
-    return total;
+    return ','; // Default delimiter
 }
 
 int add(const char *numbers) {
@@ -55,31 +33,32 @@ int add(const char *numbers) {
         return 0;
     }
 
-    char delimiter[2] = {',', '\0'}; // Default delimiter
+    char delimiter = get_delimiter((char *)numbers);
     char *numbers_copy = strdup(numbers); // Duplicate string for manipulation
     char *line = strtok(numbers_copy, "\n");
 
-    // Check for custom delimiter
-    if (line[0] == '/' && line[1] == '/') {
-        // Extract the custom delimiter
-        char *custom_delimiter = line + 2; // Skip "//"
-        if (custom_delimiter[0] == '[') {
-            char *end_delim = strchr(custom_delimiter, ']');
-            if (end_delim) {
-                strncpy(delimiter, custom_delimiter + 1, end_delim - custom_delimiter - 1);
-                delimiter[end_delim - custom_delimiter - 1] = '\0';
-                line = strtok(NULL, ""); // Get the rest of the numbers
-            }
-        } else {
-            // Just a simple delimiter
-            delimiter[0] = custom_delimiter[0];
-            line = strtok(NULL, ""); // Get the rest of the numbers
-        }
+    int total = 0, negatives[MAX_NUMBERS] = {0}, negative_count = 0;
+
+    // Replace newlines and process numbers
+    for (char *p = line; *p; p++) {
+        if (*p == '\n') *p = delimiter;
     }
 
-    replace_newlines_with_delimiter(line, delimiter);
-    int result = process_numbers(line, delimiter);
+    char *num = strtok(line, (char[]){delimiter, '\0'});
+    while (num) {
+        int value = atoi(num);
+        if (value < 0) {
+            negatives[negative_count++] = value;
+        } else if (value <= 1000) {
+            total += value;
+        }
+        num = strtok(NULL, (char[]){delimiter, '\0'});
+    }
+
+    if (negative_count > 0) {
+        throw_negative_exception(negatives, negative_count);
+    }
 
     free(numbers_copy); // Free duplicated string
-    return result;
+    return total;
 }
