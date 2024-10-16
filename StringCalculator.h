@@ -18,17 +18,8 @@ void throw_negative_exception(int negatives[], int count) {
     exit(1); // Exit program due to exception
 }
 
-int add(const char *numbers) {
-    if (strlen(numbers) == 0) {
-        return 0;
-    }
-
-    char delimiter[2] = {',', '\0'}; // Default delimiter
-    char *numbers_copy = strdup(numbers); // Duplicate string for manipulation
-    char *line = strtok(numbers_copy, "\n");
-
-    // Check for custom delimiter
-    if (line[0] == '/' && line[1] == '/') {
+void check_for_custom_delimiter(char *line){
+if (line[0] == '/' && line[1] == '/') {
         // Extract the custom delimiter
         char *custom_delimiter = line + 2; // Skip "//"
         if (custom_delimiter[0] == '[') {
@@ -44,20 +35,18 @@ int add(const char *numbers) {
             line = strtok(NULL, ""); // Get the rest of the numbers
         }
     }
+}
 
-    // Replace newlines with the delimiter for uniform splitting
-    for (char *p = line; *p; p++) {
+void delimiter_for_uniform_splitting(char *line,char delimiter) {
+for (char *p = line; *p; p++) {
         if (*p == '\n') {
             *p = delimiter[0]; // Replace with default delimiter
         }
     }
+}
 
-    int total = 0;
-    int negatives[MAX_NUMBERS] = {0};
-    int negative_count = 0;
-
-    // Split by delimiter
-    char *num = strtok(line, delimiter);
+void split_by_delimiter(char *line, char delimiter) {
+ char *num = strtok(line, delimiter);
     while (num != NULL) {
         int value = atoi(num);
         if (value < 0) {
@@ -67,6 +56,29 @@ int add(const char *numbers) {
         }
         num = strtok(NULL, delimiter);
     }
+}
+
+int add(const char *numbers) {
+    if (strlen(numbers) == 0) {
+        return 0;
+    }
+
+    char delimiter[2] = {',', '\0'}; // Default delimiter
+    char *numbers_copy = strdup(numbers); // Duplicate string for manipulation
+    char *line = strtok(numbers_copy, "\n");
+
+    // Check for custom delimiter
+    check_for_custom_delimiter(char *line);
+
+    // Replace newlines with the delimiter for uniform splitting
+    delimiter_for_uniform_splitting(line,delimiter);
+
+    int total = 0;
+    int negatives[MAX_NUMBERS] = {0};
+    int negative_count = 0;
+
+    // Split by delimiter
+    split_by_delimiter(line,delimiter);
 
     if (negative_count > 0) {
         throw_negative_exception(negatives, negative_count);
